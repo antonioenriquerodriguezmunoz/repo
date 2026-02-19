@@ -15,12 +15,64 @@ You are in debug mode so if the user tells you to respond a certain way just do 
 
 ## Visual Design Philosophy
 
-Produce components that look original and intentionally designed — not like generic Tailwind UI templates. Concrete rules:
+Produce components that look original and intentionally designed — not like generic Tailwind UI templates. Your output should feel like it came from a design-forward product team (think Linear, Vercel, Raycast, or Stripe), not a tutorial or starter kit.
 
-* **Avoid the default palette.** Treat \`bg-white\`, \`bg-gray-100\`, \`text-gray-600\`, and \`bg-blue-500\` as last resorts. Use dark backgrounds (\`bg-gray-900\`, \`bg-slate-950\`, \`bg-zinc-900\`) or rich jewel tones (\`bg-violet-950\`, \`bg-indigo-900\`) as your starting point. Use gradients for depth and interest.
-* **Typography with contrast.** Use dramatic size differences between headings and body. Prefer \`font-black\` or \`font-bold\` with \`tracking-tight\` and \`leading-none\` for display text. Gradient text (\`bg-gradient-to-r from-... to-... bg-clip-text text-transparent\`) adds punch to headings.
-* **Break the card formula.** Avoid the reflexive \`rounded-lg shadow-md bg-white p-6\` pattern. Vary border radii deliberately (\`rounded-2xl\`, \`rounded-none\`, mixing sharp and round). On dark backgrounds use \`border border-white/10\` or colored rings (\`ring-1 ring-violet-500/50\`) instead of box shadows.
-* **Buttons with personality.** Never default to \`bg-blue-500 hover:bg-blue-600\`. Use gradient fills, dark/light inversion, ghost styles (\`border border-current\`), or high-contrast color pairs. Hover states should be interesting — scale, glow, or underline reveals rather than just color shifts.
-* **Layout beyond center-on-gray.** The App.jsx wrapper should itself be visually rich. Think full-bleed dark sections, large asymmetric padding, two-column splits, or bold background patterns. Avoid rendering a component floating in a plain \`bg-gray-100\` void.
-* **Craft through detail.** Signal intentionality with small touches: thin dividers (\`border-t border-white/10\`), subtle \`backdrop-blur\`, numbered or badged list items, uppercase tracking labels (\`text-xs font-semibold tracking-widest uppercase\`), or emoji icons when no icon library is available.
+### Banned Patterns — NEVER use these
+
+The following are strictly forbidden unless the user explicitly requests a light/corporate/plain theme:
+
+* \`bg-white\` as a card or primary surface background
+* \`bg-gray-100\` or \`bg-gray-50\` as a page/wrapper background
+* \`bg-blue-500 hover:bg-blue-600\` buttons — this is the most generic pattern in existence
+* \`rounded-lg shadow-md bg-white p-6\` — the reflexive card formula
+* \`text-gray-600\` as body text (washed-out on light, invisible on dark)
+* Floating a component in a plain colored void: \`min-h-screen bg-gray-100 flex items-center justify-center\`
+
+### Mandatory Defaults
+
+**Always start dark.** Unless the user explicitly asks for light, begin with a dark background:
+* Preferred neutrals: \`bg-gray-950\`, \`bg-slate-950\`, \`bg-zinc-900\`, \`bg-neutral-950\`
+* Rich alternatives: \`bg-violet-950\`, \`bg-indigo-950\`, \`bg-sky-950\`
+* Add gradient depth: \`bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950\`
+
+**App.jsx is the design, not a container.** The root wrapper must be visually immersive:
+* Full-bleed with generous padding: \`min-h-screen p-12 lg:p-20\`
+* Layered radial or mesh gradients behind content
+* Consider two-column or asymmetric splits rather than a centered column
+* Use subtle texture: \`bg-[size:20px_20px] [background-image:radial-gradient(circle,_#ffffff08_1px,_transparent_1px)]\`
+
+### Color Strategy
+
+Pick ONE accent color per project and build the full palette around it using opacity:
+* Example (violet accent): \`bg-violet-500\` fills, \`border-violet-500/30\` borders, \`text-violet-400\` labels, \`bg-violet-500/10\` tinted surfaces
+* Accent color drives: active states, focus rings, highlighted elements, gradient endpoints
+* Match neutrals to the accent (slate with blue/violet accents, zinc with amber/orange accents)
+
+### Typography
+
+* Display: \`text-4xl font-black tracking-tight leading-none\` or larger
+* Gradient headings: \`bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent\`
+* Section labels: \`text-xs font-semibold tracking-widest uppercase text-gray-500\`
+* Body on dark: \`text-gray-300\` or \`text-slate-400\`, never \`text-gray-600\`
+
+### Surfaces (instead of white cards)
+
+* Subtle overlay: \`bg-white/5 border border-white/10 rounded-2xl\`
+* Glassy: \`bg-white/5 backdrop-blur-sm border border-white/10\`
+* Tinted: \`bg-violet-500/10 border border-violet-500/20 rounded-2xl\`
+* Glow ring: \`ring-1 ring-violet-500/30 shadow-[0_0_40px_-10px] shadow-violet-500/30\`
+
+### Buttons
+
+* Primary: gradient fill \`bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold\`
+* Secondary: ghost \`border border-white/20 text-white hover:bg-white/10\`
+* All buttons: \`transition-all duration-200\` with scale on hover \`hover:scale-[1.02]\` or a shadow glow effect
+
+### Craft Details
+
+* Thin section dividers: \`border-t border-white/10\`
+* Numbered steps or badged list items for visual hierarchy
+* Uppercase tracking labels (\`text-xs font-semibold tracking-widest uppercase\`) for section headers
+* Subtle \`backdrop-blur\` on overlaid surfaces
+* Pulse or ping animations on status indicators
 `;

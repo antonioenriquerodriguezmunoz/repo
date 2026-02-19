@@ -200,31 +200,37 @@ The component is now ready to use. You can see the preview on the right side of 
         return `import React, { useState } from 'react';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
+    setSubmitted(true);
   };
 
+  if (submitted) {
+    return (
+      <div className="text-center py-12">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-500/20 border border-violet-500/30 mb-6">
+          <span className="text-2xl">✓</span>
+        </div>
+        <h3 className="text-xl font-bold text-white mb-2">Message sent</h3>
+        <p className="text-slate-400">We'll get back to you soon.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div>
+      <p className="text-xs font-semibold tracking-widest uppercase text-violet-400 mb-3">Get in touch</p>
+      <h2 className="text-3xl font-black tracking-tight text-white mb-8">Contact Us</h2>
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="name" className="block text-xs font-semibold tracking-widest uppercase text-slate-400 mb-2">
             Name
           </label>
           <input
@@ -234,12 +240,12 @@ const ContactForm = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Your name"
+            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all"
           />
         </div>
-        
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="email" className="block text-xs font-semibold tracking-widest uppercase text-slate-400 mb-2">
             Email
           </label>
           <input
@@ -249,12 +255,12 @@ const ContactForm = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="you@example.com"
+            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all"
           />
         </div>
-        
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="message" className="block text-xs font-semibold tracking-widest uppercase text-slate-400 mb-2">
             Message
           </label>
           <textarea
@@ -264,13 +270,13 @@ const ContactForm = () => {
             onChange={handleChange}
             required
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="What's on your mind?"
+            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all resize-none"
           />
         </div>
-        
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+          className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px] hover:shadow-violet-500/50"
         >
           Send Message
         </button>
@@ -284,29 +290,30 @@ export default ContactForm;`;
       case "card":
         return `import React from 'react';
 
-const Card = ({ 
-  title = "Welcome to Our Service", 
-  description = "Discover amazing features and capabilities that will transform your experience.",
-  imageUrl,
-  actions 
+const Card = ({
+  title = "Introducing the Future",
+  description = "Discover capabilities that redefine what's possible. Built for teams who move fast and care about craft.",
+  badge = "New",
+  actions,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      {imageUrl && (
-        <img 
-          src={imageUrl} 
-          alt={title}
-          className="w-full h-48 object-cover"
-        />
-      )}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 mb-4">{description}</p>
-        {actions && (
-          <div className="mt-4">
-            {actions}
-          </div>
+    <div className="relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden group">
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-indigo-500/5 pointer-events-none" />
+      <div className="p-8">
+        {badge && (
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-violet-400 bg-violet-500/10 border border-violet-500/20 rounded-full px-3 py-1 mb-5">
+            {badge}
+          </span>
         )}
+        <h3 className="text-2xl font-black tracking-tight text-white mb-3">{title}</h3>
+        <p className="text-slate-400 leading-relaxed mb-6">{description}</p>
+        <div className="border-t border-white/10 pt-6">
+          {actions || (
+            <button className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold px-6 py-2.5 rounded-xl transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_20px_-5px] hover:shadow-violet-500/50">
+              Learn More
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -320,40 +327,32 @@ export default Card;`;
 const Counter = () => {
   const [count, setCount] = useState(0);
 
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  const decrement = () => {
-    setCount(count - 1);
-  };
-
-  const reset = () => {
-    setCount(0);
-  };
-
   return (
-    <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Counter</h2>
-      <div className="text-4xl font-bold mb-6">{count}</div>
-      <div className="flex gap-4">
-        <button 
-          onClick={decrement}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+    <div className="flex flex-col items-center gap-8">
+      <div>
+        <p className="text-xs font-semibold tracking-widest uppercase text-slate-500 text-center mb-1">Current count</p>
+        <div className="text-8xl font-black tracking-tighter text-white tabular-nums">
+          {count.toString().padStart(2, '0')}
+        </div>
+      </div>
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setCount(c => c - 1)}
+          className="w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white text-xl font-bold hover:bg-white/10 transition-all duration-200 hover:scale-110"
         >
-          Decrease
+          −
         </button>
-        <button 
-          onClick={reset}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+        <button
+          onClick={() => setCount(0)}
+          className="px-5 h-12 rounded-xl border border-white/10 bg-white/5 text-slate-400 text-sm font-semibold hover:bg-white/10 hover:text-white transition-all duration-200"
         >
           Reset
         </button>
-        <button 
-          onClick={increment}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+        <button
+          onClick={() => setCount(c => c + 1)}
+          className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 text-white text-xl font-bold hover:from-violet-500 hover:to-indigo-500 transition-all duration-200 hover:scale-110 hover:shadow-[0_0_20px_-5px] hover:shadow-violet-500"
         >
-          Increase
+          +
         </button>
       </div>
     </div>
@@ -367,22 +366,22 @@ export default Counter;`;
   private getOldStringForReplace(componentType: string): string {
     switch (componentType) {
       case "form":
-        return "    console.log('Form submitted:', formData);";
+        return "    setSubmitted(true);";
       case "card":
-        return '      <div className="p-6">';
+        return '        <h3 className="text-2xl font-black tracking-tight text-white mb-3">{title}</h3>';
       default:
-        return "  const increment = () => setCount(count + 1);";
+        return "  const [count, setCount] = useState(0);";
     }
   }
 
   private getNewStringForReplace(componentType: string): string {
     switch (componentType) {
       case "form":
-        return "    console.log('Form submitted:', formData);\n    alert('Thank you! We\\'ll get back to you soon.');";
+        return "    setSubmitted(true);\n    console.log('Form submitted:', formData);";
       case "card":
-        return '      <div className="p-6 hover:bg-gray-50 transition-colors">';
+        return '        <h3 className="text-2xl font-black tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent mb-3">{title}</h3>';
       default:
-        return "  const increment = () => setCount(prev => prev + 1);";
+        return "  const [count, setCount] = useState(0);\n  const isNegative = count < 0;";
     }
   }
 
@@ -392,17 +391,27 @@ export default Counter;`;
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gray-950 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,80,255,0.15),transparent)] flex items-center justify-center p-12">
       <div className="w-full max-w-md">
-        <Card 
-          title="Amazing Product"
-          description="This is a fantastic product that will change your life. Experience the difference today!"
-          actions={
-            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-              Learn More
-            </button>
-          }
+        <Card
+          title="Introducing the Future"
+          description="Discover capabilities that redefine what's possible. Built for teams who move fast and care about craft."
+          badge="New"
         />
+      </div>
+    </div>
+  );
+}`;
+    }
+
+    if (componentName === "ContactForm") {
+      return `import ContactForm from '@/components/ContactForm';
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gray-950 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,80,255,0.15),transparent)] flex items-center justify-center p-12">
+      <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-10">
+        <ContactForm />
       </div>
     </div>
   );
@@ -413,10 +422,8 @@ export default function App() {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8">
-      <div className="w-full max-w-md">
-        <${componentName} />
-      </div>
+    <div className="min-h-screen bg-gray-950 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,80,255,0.15),transparent)] flex items-center justify-center p-12">
+      <${componentName} />
     </div>
   );
 }`;
