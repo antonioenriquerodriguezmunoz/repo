@@ -6,3 +6,6 @@ node_modules
 prisma/dev.db
 prisma/dev.db-journal
 src/generated
+.playwright-mcp/
+screenshot-*.png
+.claude/settings.local.json
